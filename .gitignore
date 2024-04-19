@@ -20,4 +20,5 @@ database_part_12.db
 /DatabaseMerger/DatabasesToMerge
 /DatabaseMerger/Output
 
-API_Keys.JSON
+/keys
+LocalAPI/node_modules
