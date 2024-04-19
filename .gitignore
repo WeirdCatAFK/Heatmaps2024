@@ -20,4 +20,5 @@ database_part_12.db
 /DatabaseMerger/DatabasesToMerge
 /DatabaseMerger/Output
 
+geocoder.py
 API_Keys.JSON
