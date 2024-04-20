@@ -16,7 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true})); 
 
 //API endpoints
-
 app.use('/news', news);
 app.use('/dataset', dataset);
 app.use('/diccionario', diccionario);
