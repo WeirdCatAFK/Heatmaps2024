@@ -1,5 +1,115 @@
+import geocoder, sqlite3, json, re
+
+sqliteDB_Path = 'data.db'
+def createDB(sqliteDB_Path: str, tableName: str):
+    connection = sqlite3.connect(sqliteDB_Path)
+    cursor = connection.cursor()
+    
+    # Verificar si la tabla ya existe
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?;", (tableName,))
+    existing_table = cursor.fetchone()
+    
+    if existing_table:
+        print("La tabla '{}' ya existe en la base de datos. No se realizará ninguna acción.".format(tableName))
+    else:
+        # Si la tabla no existe, crearla
+        cursor.execute("CREATE TABLE \"{}\" ("
+                   "\n"
+                   "\t\"id\"\tINTEGER NOT NULL UNIQUE,\n"
+                   "\t\"Lugares\"\tTEXT,\n"
+                   "\t\"Condicion\"\tTEXT,\n"
+                   "\t\"Fecha\"\tTEXT,\n"
+                   "\t\"Coordenadas\"\tTEXT,\n"
+                   "\t\"Ciudades\"\tTEXT,\n"
+                   "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
+                   ");".format(tableName))
+        print("La tabla '{}' ha sido creada correctamente.".format(tableName))
+
+    connection.commit()
+def parsear_texto_a_json(texto):
+    # Expresión regular para encontrar los bloques JSON
+    patron_json = re.compile(r"```json\n(.*?)```", re.DOTALL)
+
+    # Buscar coincidencias y parsear a JSON
+    analisis_json = []
+    for match in patron_json.findall(texto):
+        analisis_json.append(json.loads(match))
+
+    return analisis_json
+
+def insertData(sqliteDB_Path: str, tableName: str, data: dict):
+    connection = sqlite3.connect(sqliteDB_Path)
+    cursor = connection.cursor()
+
+    # Convertir el diccionario a formato JSON
+    json_data = json.dumps(data)
+
+    if 'Coordenadas' in json_data:
+        cursor.execute("INSERT INTO {} (Lugares, Condicion, Fecha, Coordenadas, Ciudades) VALUES (?, ?, ?, ?, ?);".format(tableName),
+                       (json_data['Lugares'], json_data['Condicion'], json_data['Fecha'], json_data['Coordenadas'], json_data['Ciudades']))
+    else:
+        cursor.execute("INSERT INTO {} (Lugares, Condicion, Fecha, Ciudades) VALUES (?, ?, ?, ?);".format(tableName),
+                       (json_data['Lugares'], json_data['Condicion'], json_data['Fecha'], json_data['Ciudades']))
+
+    connection.commit()
+    connection.close()
+import sqlite3
+
+def getAnalisisJSON(sqliteDB_Path: str):
+    connection = sqlite3.connect(sqliteDB_Path)
+    cursor = connection.cursor()
+
+    # Consulta para obtener todos los registros de la tabla "content"
+    cursor.execute("SELECT id, url, text, analisis FROM content")
+    rows = cursor.fetchall()
+
+    # Lista para almacenar los resultados del análisis
+    analysis_results = []
+
+    for row in rows:
+        # Obtener los valores de cada campo en la fila
+        id, url, text, analisis = row
+        
+        # Realizar el análisis de cada campo (aquí puedes agregar tu lógica de análisis)
+        # En este ejemplo, simplemente agregamos una descripción de los valores
+        analysis_result = {
+            "id": id,
+            "url": "Análisis del URL: {}".format(url),
+            "text": "Análisis del texto: {}".format(text),
+            "analisis": "Análisis del campo 'analisis': {}".format(analisis)
+        }
+        
+        # Agregar el resultado del análisis a la lista de resultados
+        analysis_results.append(analysis_result)
+
+    connection.close()
+
+    return analysis_results
+
+
+
 def main():
-    pass
+    database = 'data.db'
+    
+    #Creamos nuestra taba en la base de datos
+    createDB(sqliteDB_Path,'dataset')
+    
+    #Llamamos todos lo JSONS que genero nuestro codigo createDatabase
+    JSONS = getAnalisisJSON(database) 
+    
+    #Parseamos los resultados a una lista de jsons
+    i = 0
+    for text in JSONS:
+        json = parsear_texto_a_json(text["analisis"])
+        if json:
+            if json[0]["LUGARES"] != []:
+                print(json[0]["LUGARES"])
+                print(f'Registro exitoso {i}')
+                i += 1             
+            
+
+            
+        
     
 
 if __name__ == "__main__":

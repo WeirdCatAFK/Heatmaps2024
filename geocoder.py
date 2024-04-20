@@ -9,7 +9,7 @@ def encode_url(url):
 
 def get_location(query):
     # Load API keys from JSON file
-    with open('API_Keys.json', 'r') as keys_file:
+    with open('keys\Api_Keys.JSON', 'r') as keys_file:
         keys = json.load(keys_file)
 
         # Check if the Geocoding key is missing
@@ -43,6 +43,3 @@ def get_location(query):
         print("Error:", response.status_code)
         return None
 
-
-query = 'La estatua de la libertad'
-print(get_location(query))
