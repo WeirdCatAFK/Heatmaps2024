@@ -2,6 +2,35 @@ const express = require('express');
 const mongo = require('../config/mongo');
 const news = express.Router();
 
+news.get('/getLast', async (req, res, next) => {
+  try {
+    const client = mongo.getClient();
+  
+    const database = client.db("Prod");
+    const coll = database.collection("News");
+
+    const query = { };
+    const options = { projection: {_id:0, id_news:1}, sort:{"id_news": 1}}
+
+    const cursor = await coll.find(query, options);
+
+    if ((await coll.countDocuments(query)) === 0) {
+      return res.status(204).json({ code: 204, message: "Sin documentos"});
+    }
+    let result = {}
+    for await (const doc of cursor) {
+
+      result = doc;
+
+    }
+    client.close();
+
+    return res.status(200).json({ code: 200, message: result});
+  } catch (err) {
+    return res.status(400).json({ code: 400, message: err.errorResponse});
+  }
+});
+
 news.get('/', async (req, res, next) => {
   try {
     const client = mongo.getClient();
