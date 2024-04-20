@@ -1,6 +1,8 @@
-import geocoder, sqlite3, json, re
+import geocoder, sqlite3, json, re, time
 
-sqliteDB_Path = 'data.db'
+
+import sqlite3
+
 def createDB(sqliteDB_Path: str, tableName: str):
     connection = sqlite3.connect(sqliteDB_Path)
     cursor = connection.cursor()
@@ -13,19 +15,19 @@ def createDB(sqliteDB_Path: str, tableName: str):
         print("La tabla '{}' ya existe en la base de datos. No se realizará ninguna acción.".format(tableName))
     else:
         # Si la tabla no existe, crearla
-        cursor.execute("CREATE TABLE \"{}\" ("
-                   "\n"
-                   "\t\"id\"\tINTEGER NOT NULL UNIQUE,\n"
-                   "\t\"Lugares\"\tTEXT,\n"
-                   "\t\"Condicion\"\tTEXT,\n"
-                   "\t\"Fecha\"\tTEXT,\n"
-                   "\t\"Coordenadas\"\tTEXT,\n"
-                   "\t\"Ciudades\"\tTEXT,\n"
-                   "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
-                   ");".format(tableName))
+        cursor.execute("""CREATE TABLE "{}" (
+                   "id" INTEGER NOT NULL UNIQUE,
+                   "Lugar" TEXT,
+                   "Coordenadas" TEXT,
+                   "newsUrls" TEXT,
+                   "nVecesAparece" INTEGER,
+                   PRIMARY KEY("id" AUTOINCREMENT)
+                   );""".format(tableName))
         print("La tabla '{}' ha sido creada correctamente.".format(tableName))
-
+    
     connection.commit()
+    connection.close()
+
 def parsear_texto_a_json(texto):
     # Expresión regular para encontrar los bloques JSON
     patron_json = re.compile(r"```json\n(.*?)```", re.DOTALL)
@@ -37,23 +39,6 @@ def parsear_texto_a_json(texto):
 
     return analisis_json
 
-def insertData(sqliteDB_Path: str, tableName: str, data: dict):
-    connection = sqlite3.connect(sqliteDB_Path)
-    cursor = connection.cursor()
-
-    # Convertir el diccionario a formato JSON
-    json_data = json.dumps(data)
-
-    if 'Coordenadas' in json_data:
-        cursor.execute("INSERT INTO {} (Lugares, Condicion, Fecha, Coordenadas, Ciudades) VALUES (?, ?, ?, ?, ?);".format(tableName),
-                       (json_data['Lugares'], json_data['Condicion'], json_data['Fecha'], json_data['Coordenadas'], json_data['Ciudades']))
-    else:
-        cursor.execute("INSERT INTO {} (Lugares, Condicion, Fecha, Ciudades) VALUES (?, ?, ?, ?);".format(tableName),
-                       (json_data['Lugares'], json_data['Condicion'], json_data['Fecha'], json_data['Ciudades']))
-
-    connection.commit()
-    connection.close()
-import sqlite3
 
 def getAnalisisJSON(sqliteDB_Path: str):
     connection = sqlite3.connect(sqliteDB_Path)
@@ -73,10 +58,10 @@ def getAnalisisJSON(sqliteDB_Path: str):
         # Realizar el análisis de cada campo (aquí puedes agregar tu lógica de análisis)
         # En este ejemplo, simplemente agregamos una descripción de los valores
         analysis_result = {
-            "id": id,
             "url": "Análisis del URL: {}".format(url),
             "text": "Análisis del texto: {}".format(text),
-            "analisis": "Análisis del campo 'analisis': {}".format(analisis)
+            "analisis": "Análisis del campo 'analisis': {}".format(analisis),
+            "id": obtener_id_por_url("Análisis del URL: {}".format(url))
         }
         
         # Agregar el resultado del análisis a la lista de resultados
@@ -85,14 +70,91 @@ def getAnalisisJSON(sqliteDB_Path: str):
     connection.close()
 
     return analysis_results
+def obtener_id_por_url(url_busqueda):
+    # Conexión a la base de datos
+    conexion = sqlite3.connect('data.db')
+    cursor = conexion.cursor()
 
+    # Consulta SQL para obtener el ID basado en la URL
+    consulta = "SELECT id FROM content WHERE url = ?"
+    cursor.execute(consulta, (url_busqueda,))
+    resultado = cursor.fetchone()
 
+    # Cerrar la conexión a la base de datos
+    conexion.close()
+
+    # Comprobar si se encontró el ID
+    if resultado:
+        return resultado[0]
+    else:
+        return "URL no encontrada o ID no disponible"
+
+def obtener_url_por_id(id_busqueda):
+    # Conexión a la base de datos
+    conexion = sqlite3.connect('data.db')
+    cursor = conexion.cursor()
+
+    # Consulta SQL para obtener la URL basada en el ID
+    consulta = "SELECT url FROM content WHERE id = ?"
+    cursor.execute(consulta, (id_busqueda,))
+    resultado = cursor.fetchone()
+
+    # Cerrar la conexión a la base de datos
+    conexion.close()
+
+    # Comprobar si se encontró la URL
+    if resultado:
+        return resultado[0]
+    else:
+        return "ID no encontrado o URL no disponible"
+def insertar_registro_desde_json(sqliteDB_Path: str, tableName: str, registro_json: dict):
+    # Conexión a la base de datos
+    connection = sqlite3.connect(sqliteDB_Path)
+    cursor = connection.cursor()
+
+    # Convertir el diccionario JSON en una cadena JSON
+    registro_json_str = json.dumps(registro_json)
+
+    # Consultar si el registro ya existe en la tabla
+    cursor.execute("SELECT id, newsUrls, nVecesAparece FROM {} WHERE Lugar=? AND Coordenadas=?;".format(tableName),
+                   (registro_json['Lugar'], registro_json['Coordenadas']))
+    existing_record = cursor.fetchone()
+
+    if existing_record:
+        # Actualizar la columna nVecesAparece
+        cursor.execute("UPDATE {} SET nVecesAparece = nVecesAparece + 1 WHERE id = ?;".format(tableName), (existing_record[0],))
+        # Obtener la lista de newsUrls y agregar el nuevo valor
+        news_urls_list = json.loads(existing_record[1])
+        news_urls_list.append(registro_json['newsUrls'])
+        # Actualizar la columna newsUrls
+        cursor.execute("UPDATE {} SET newsUrls = ? WHERE id = ?;".format(tableName), (json.dumps(news_urls_list), existing_record[0]))
+    else:
+        # Insertar el registro en la tabla
+        cursor.execute("INSERT INTO {} (Lugar, Coordenadas, newsUrls, nVecesAparece) VALUES (?, ?, ?, ?);".format(tableName),
+                       (registro_json['Lugar'], registro_json['Coordenadas'], json.dumps([registro_json['newsUrls']]), 1))
+    
+    # Guardar los cambios en la base de datos
+    connection.commit()
+    
+    # Cerrar la conexión a la base de datos
+    connection.close()
+
+# Ejemplo de uso:
+sqliteDB_Path = 'ruta/a/tu/base_de_datos.db'
+tableName = 'content'
+
+registro_json = {
+    "Lugar": "Ejemplo",
+    "Coordenadas": "1.234, -56.789",
+    "newsUrls": "ABC123",
+    "nVecesAparece": 5
+}
 
 def main():
     database = 'data.db'
     
     #Creamos nuestra taba en la base de datos
-    createDB(sqliteDB_Path,'dataset')
+    createDB(database,'dataset')
     
     #Llamamos todos lo JSONS que genero nuestro codigo createDatabase
     JSONS = getAnalisisJSON(database) 
@@ -100,12 +162,29 @@ def main():
     #Parseamos los resultados a una lista de jsons
     i = 0
     for text in JSONS:
-        json = parsear_texto_a_json(text["analisis"])
-        if json:
-            if json[0]["LUGARES"] != []:
-                print(json[0]["LUGARES"])
-                print(f'Registro exitoso {i}')
-                i += 1             
+        json_results = parsear_texto_a_json(text["analisis"])
+        for json_result in json_results:
+            output = {}  # Nuevo diccionario para cada iteración
+            if json_result:
+                if json_result["LUGARES"] != [] and json_result["CONDICION"] == True:
+                    if json_result["CIUDADES"] != []:
+                        for lugar, ciudad in zip(json_result["LUGARES"], json_result["CIUDADES"]):
+                            output["Lugar"] = f'{lugar},{ciudad}'
+                            output["Coordenadas"] = str(geocoder.get_location(output["Lugar"]))
+                            output["newsUrls"] = obtener_url_por_id(json_result["ID"])
+                            insertar_registro_desde_json('data.db','dataset',output)
+                    else:
+                        for lugar in json_result["LUGARES"]:
+                            output["Lugar"] = lugar
+                            output["Coordenadas"] = str(geocoder.get_location(output["Lugar"]))
+                            output["newsUrls"] = obtener_url_por_id(json_result["ID"])
+                            insertar_registro_desde_json('data.db','dataset',output)
+
+        
+    
+    
+                
+    
             
 
             
