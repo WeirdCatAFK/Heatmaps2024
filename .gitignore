@@ -2,8 +2,6 @@ data.db
 test.py
 __pycache__
 
-
-
 database_part_0.db
 database_part_1.db
 database_part_2.db
@@ -22,3 +20,7 @@ database_part_12.db
 
 /keys
 LocalAPI/node_modules
+DBmanagement/DatabaseMerger
+FutureFlaskServer
+DBmanagement/output.json
+DBmanagement/DatabaseMerger
