@@ -1,125 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mapa</title>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-        <link rel="stylesheet" href="estilosm.css">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-        <style>
-            body, html {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa</title>
+    <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="estilosm.css">
 
-            .contenedor {
-                display: flex;
-            }
+    from flask import Flask, jsonify
+    import sqlite3
 
-            #map {
-                width: 60vw;
-                height: 80vh;
-                border-radius: 10px;
-            }
+    app = Flask(__name__)
 
-            .boton {
-                margin-bottom: 10px;
-            }
+    # Function to fetch data from SQLite database and convert to JSON
+    def fetch_data():
+    conn = sqlite3.connect('data.db') # Replace 'your_database.db' with your actual SQLite database file
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM dataset')
+    data = cursor.fetchall()
+    conn.close()
 
-        </style>
-    </head>
+    # Convert data to a list of dictionaries
+    json_data = []
+    for row in data:
+    json_data.append({
+    'id': row[0],
+    'Lugar': row[1],
+    'Coordenadas': row[2],
+    'newsUrls': row[3],
+    'nVecesAparece': row[4]
+    })
 
-    <body>
-        <header>
-            <a class="logo">
-                <h1>H E A T M A  P S</h1>
-            </a>
-            <nav>
-                <a href="../index/index.html" id="loadInicio">Inicio</a>
+    return json_data
+
+    @app.route('/', methods=['GET'])
+    def get_data():
+    data = fetch_data()
+    response = jsonify(data)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+    if __name__ == '__main__':
+    app.run(debug=True)
+
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            display: flex;
+        }
+
+        #map {
+            width: 60vw;
+            height: 80vh;
+            border-radius: 10px;
+        }
+
+        .boton {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="logo">
+            <h1>H E A T M A P S</h1>
+        </a>
+        <nav>
+            <a href="../index/index.html" id="loadInicio">Inicio</a>
             <a href="../index/Products.html" id="loadProyectos">Productos</a>
             <a href="../login/Login.html" id="loadLogin">Iniciar Sesión</a>
-            <a href="../mapa/mapa.html" id="loadMap">Mapa</a>
-            </nav>
-        </header>
-        <div class="contenedor">
-            <div class="barra-lateral">
-                <div class="nombre-pagina">
-                    <i class='bx bx-menu' id="barras-icon"></i>
-                    <span>Panel de Control</span>
-                </div>
-                <button class="boton">
-                    <ion-icon name="podium"></ion-icon>
-                    <span>Analizar coordenadas</span>
-                </button>
-                <br>
-                <button class="boton">
-                    <ion-icon name="create" class="create"></ion-icon>
-                    <span class="CR">Crear Registro</span>
-                </button> 
+            <a href="../mapa/mapa.html" id="loadMapa">Mapa</a>
+        </nav>
+    </header>
+    <div class="contenedor">
+        <div class="barra-lateral">
+            <div class="nombre-pagina">
+                <i class='bx bx-menu' id="barras-icon"></i>
+                <span>Panel de Control</span>
             </div>
-            <div class="contenido-central">
-                <div class="titulo-mapa">Mapa</div>
-                <div id="map"></div>
-            </div>
+            <button class="boton">
+                <ion-icon name="podium"></ion-icon>
+                <span>Analizar coordenadas</span>
+            </button>
+            <br>
+            <button class="boton">
+                <ion-icon name="create" class="create"></ion-icon>
+                <span class="CR">Crear Registro</span>
+            </button>
         </div>
+        <div class="contenido-central">
+            <div class="titulo-mapa">Mapa</div>
+            <div id="map"></div>
+        </div>
+    </div>
 
-        <script src="mapa.js"></script>
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-        
-        <script>
-            //Map initialization =======================================
-            var map = L.map('map').setView([19.42847, -99.12766], 13);
-            
-            //OSM Layer
-            var osm =
+    <script src="mapa.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+    <script>
+        //Map initialization =======================================
+        var map = L.map('map').setView([19.42847, -99.12766], 13);
+
+        //OSM Layer
+        var osm =
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             });
-            osm.addTo(map);
-            function addMarker(Alt,Lat,Popup){
-        L.marker([Alt,Lat]).addTo(map).bindPopup(Popup).openPopup();
-    }
-    // Function to make a GET request to the Flask server
-    function fetchData() {
-        fetch('http://127.0.0.1:5000/')
+        osm.addTo(map);
+        
+        // Function to make a GET request to the Flask server
+        function fetchData() {
+            function fetchData() {
+                fetch(' http://localhost:5000/')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the received JSON data
+                        console.log(data); // You can process the data here
+                        console.log("hola mundo");
+                        // Example: Display the data in a div
+                        document.getElementById('dataContainer').innerHTML = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        }
+        //window.onload = fetchData();
+    
+        async function getJSON(){
+            fetch('dataset.json')
         .then(response => response.json())
         .then(data => {
-        // Handle the received JSON data
-            console.log(data); // You can process the data here
+            JSON.parse(data);
+            data.forEach(element => {
+                addMarker(element.coordenadas[0],element.coordenadas[1],element.newsUrls);
+            });
+            
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-    //fetchData();
+        .catch(error => console.error("Error fetching JSON data:", error));
 
-
-       //CONTROLES HTML===============================
-       LI = document.getElementById("loadInicio");
-        LI.addEventListener("click",function () {
+        }
+    
+        
+        //CONTROLES HTML===============================
+        LI = document.getElementById("loadInicio");
+        LI.addEventListener("click", function () {
             window.location.href = LI.href;
         });
         LL = document.getElementById("loadLogin");
-        LL.addEventListener("click",function () {
+        LL.addEventListener("click", function () {
             window.location.href = LL.href;
         });
         LMap = document.getElementById("loadMapa");
-        LMap.addEventListener("click",function () {
+        LMap.addEventListener("click", function () {
             window.location.href = LMap.href;
         });
         LP = document.getElementById("loadProyectos");
-        LP.addEventListener("click",function () {
+        LP.addEventListener("click", function () {
             window.location.href = LP.href;
         });
-        </script>
-        
-    </body>
+    </script>
+
+</body>
 
 </html>
-
+<script src="data.js">  </script>
 <!-- leafet js-->
-

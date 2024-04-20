@@ -7,7 +7,7 @@ app = Flask(__name__)
 def fetch_data():
     conn = sqlite3.connect('data.db')  # Replace 'your_database.db' with your actual SQLite database file
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM TableName')
+    cursor.execute('SELECT * FROM dataset')
     data = cursor.fetchall()
     conn.close()
 
@@ -26,8 +26,10 @@ def fetch_data():
 
 @app.route('/', methods=['GET'])
 def get_data():
+    response.headers.add('Access-Control-Allow-Origin', '*')
     data = fetch_data()
-    return jsonify(data)
+    response = jsonify(data)
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
