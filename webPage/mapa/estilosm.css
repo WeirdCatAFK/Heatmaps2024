@@ -1,0 +1,180 @@
+/*Google Fonts - Poppins*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.logo h1{
+    display: flex;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    align-items: left;
+}
+
+header{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0 45px 0 100px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+}
+
+nav a{
+    color: #022b30;
+    border-radius: 50px;
+    text-decoration: none;
+    padding: 6px 15px;
+    list-style: none;
+    margin-left: 20px;
+    font-size: 20px;
+    background-color: #77B0AA;
+}
+
+nav a:hover,
+nav a.activate{
+    background: #7fd9e5;
+    color: #094c55;
+}
+
+
+body{
+    background-color: #003C43;
+    /*border: 5px solid;*/
+    height: 100vh;
+    width: 100%;
+}
+
+.titulo-mapa{
+    text-align: center;
+    font-weight: bold;
+    font-size: 50px;
+    color: #E3FEF7;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la barra lateral */
+
+:root{
+    --color-barra-lateral: rgb(19, 93, 102);
+    --color-boton: rgb(34, 134, 147);
+    --color-boton-text: rgb(187, 223, 228); 
+    --color-texto: rgb(187, 223, 228);
+    --color-texto-menu: rgb(227, 254, 247);
+    --color-texto-hover: rgb(12, 12, 12);
+}
+
+.barra-lateral{
+    width: 250px;
+    /*height: 100%;*/
+    overflow: hidden;
+    padding: 10px 15px;
+    background-color: var(--color-barra-lateral);
+    transition: width 0.5s ease;
+    margin-top: 200px;
+    margin-bottom: 380px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.contenido-central{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 190px;
+}
+
+.mini-barra-lateral{
+    width: 80px;
+}
+
+.barra-lateral span{
+    white-space: nowrap;
+    font-size: 13px;
+    text-align: left;
+    margin-right: 8px;
+    opacity: 1;
+    transition: opacity 0.5s ease, width 0.5s ease;
+    color: rgb(187, 223, 228);
+}
+
+
+
+.barra-lateral span.oculto{
+    opacity: 0;
+    width: 0;
+}
+
+
+.barra-lateral .nombre-pagina{
+    width: 100%;
+    height: 50px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.barra-lateral .nombre-pagina i{
+    min-width: 50px;
+    font-size: 35px;
+    margin-left: 9px;
+    cursor: pointer;
+    color: var(--color-texto);
+}
+
+.barra-lateral .nombre-pagina span{
+    margin-left: 5px;
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+
+.barra-lateral .nombre-pagina{
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+
+
+/* Estilos para los botones */
+.barra-lateral .boton{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color-boton);
+    color: var(--color-boton-text);
+    cursor: pointer;
+    margin-bottom: 10px; 
+}
+
+.barra-lateral .boton:hover{
+    color: black;
+    background-color: #94cebf;
+}
+
+.barra-lateral .boton ion-icon{
+    min-width: 50px;
+    font-size: 25px;
+}
+
+
+.barra-lateral .boton span{
+    color: rgb(187, 223, 228);
+}
+
+.barra-lateral .boton span:hover{
+    color:black;
+}
