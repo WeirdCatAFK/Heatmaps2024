@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeatMaps</title>
+
+    <link rel="stylesheet" href="estilosf.css">
+
+    <script type="text/javascript" src="main.js"></script>
+</head>
+<body>
+    
+    <header>
+        <a class="logo">
+            <h1>H E A T M A  P S</h1>
+        </a>
+        <nav>
+            <a href="../index/index.html" id="loadInicio">Inicio</a>
+            <a href="../index/Products.html" id="loadProyectos">Productos</a>
+            <a href="../login/Login.html" id="loadLogin">Iniciar Sesión</a>
+            <a href="../mapa/mapa.html" id="loadMap">Mapa</a>
+        </nav>
+    </header>
+    <div class="body-contenedores">
+        <div class="contenedor-form">
+            <div class="informacion">
+                <div class="info-childs">
+                    <h1>Pasos para configurar tu nuevo proyecto</h1>
+                </div>
+            </div>
+            <div class="form-informacion">
+                <div class="form-informacion-child">
+                    <form class="formulario" id="formulario" onsubmit="return guardar();">
+                        <div class="h1t">
+                            <h1>Proyecto Heatmaps</h1>
+                            <div class="line"></div>
+                        </div>
+                        <br>
+                        <div class="form-content">
+                            <label>Análisis Query</label> <!--arreglo js-->
+                            <br>
+                            <input type="text" placeholder="Ingrese su texto" required  class="ingreso" id="AQ">
+                            <br><br>
+                            <label>Condición a analizar</label>
+                            <br>
+                            <input type="text" placeholder="Ingrese su texto" required  class="ingreso" id="CA">
+                            <br><br>
+                            <button id="Enviar">Enviar</button>
+    
+                        </div>                    
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <!--<button id="Enviar">Enviar</button>-->
+    <script>
+        LI = document.getElementById("loadInicio");
+        LI.addEventListener("click",function () {
+            window.location.href = LI.href;
+        });
+        LL = document.getElementById("loadLogin");
+        LL.addEventListener("click",function () {
+            window.location.href = LL.href;
+        });
+        LM = document.getElementById("loadMapa");
+        LM.addEventListener("click",function () {
+            window.location.href = LM.href;
+        });
+        LP = document.getElementById("loadProyectos");
+        LP.addEventListener("click",function () {
+            window.location.href = LP.href;
+        });
+        
+    </script>
+</body>
+</html>

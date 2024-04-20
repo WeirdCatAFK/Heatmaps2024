@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-Inicio</title>
+
+    <Link rel="stylesheet" href="estilosl.css"></Link>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <header>
+        <a class="logo">
+            <h1>H E A T M A  P S</h1>
+        </a>
+        <nav>
+            <a href="../index/index.html" id="loadInicio">Inicio</a>
+            <a href="../index/Products.html" id="loadProyectos">Productos</a>
+            <a href="../login/Login.html" id="loadLogin">Iniciar Sesión</a>
+            <a href="../mapa/mapa.html" id="loadMap">Mapa</a>
+        </nav>
+    </header>
+
+    <section class="contenedor forms">
+        <div class="form login">
+            <div class="form-contenido">
+                <h1>¡Bienvenido!</h1>
+                <header>Inicio de Sesión</header>
+                <form action="#">
+                    <div class="campo campo-input">
+                        <label>Usuario</label>
+                        <br>
+                        <input type="text" placeholder="Usuario" class="input">
+                    </div>
+
+                    <div class="campo campo-input">
+                        <br>
+                        <label>Contraseña</label>
+                        <input type="password" placeholder="Credencial" class="password">
+                        <i class='bx bx-hide eye-icon'></i>
+                    </div>
+
+                    <div class="form-link">
+                        <br>
+                        <a href="#" class="olvidar-cont">¿Olvidaste tu contraseña?</a>
+                    </div>
+
+                    <div class="campo boton-campo">
+                        <button>Iniciar Sesión</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="media-options">
+                <a href="" class="campo facebook">
+                    <i class='bx bxl-facebook facebook-icon' ></i>
+                    <span>Inicia sesión con Facebook</span>
+                </a>
+            </div>
+
+            <div class="media-options">
+                <a href="" class="campo google">
+                    <i class='bx bxl-google google-icon' ></i>
+                    <span>Inicia sesión con Google</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+    <script src="script.js"></script>
+    <script>
+        LI = document.getElementById("loadInicio");
+        LI.addEventListener("click",function () {
+            window.location.href = LI.href;
+        });
+        LL = document.getElementById("loadLogin");
+        LL.addEventListener("click",function () {
+            window.location.href = LL.href;
+        });
+        LM = document.getElementById("loadMapa");
+        LM.addEventListener("click",function () {
+            window.location.href = LM.href;
+        });
+        LP = document.getElementById("loadProyectos");
+        LP.addEventListener("click",function () {
+            window.location.href = LP.href;
+        });
+    </script>
+</body>
+</html>

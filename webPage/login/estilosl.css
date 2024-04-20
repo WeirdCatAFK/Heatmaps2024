@@ -1,0 +1,286 @@
+/*Google Fonts - Poppins*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.logo h1{
+    display: flex;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    align-items: center;
+}
+
+header{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0 45px 0 100px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+}
+
+nav a{
+    color: #022b30;
+    border-radius: 50px;
+    text-decoration: none;
+    padding: 6px 15px;
+    list-style: none;
+    margin-left: 20px;
+    font-size: 20px;
+    background-color: #77B0AA;
+}
+
+nav a:hover,
+nav a.activate{
+    background: #7fd9e5;
+    color: #094c55;
+}
+
+body{
+    background-color: #003C43;
+}
+
+.titulo{
+    background-color: #003C43;
+    color: #E3FEF7;
+    margin-top: 20px;
+    font-size: 50px;
+    text-align: center;
+}
+
+.contenedor{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #003C43;
+    /*color:antiquewhite;*/
+}
+
+.form{
+    max-width: 430px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 6px;
+    background-color: aliceblue;
+}
+
+h1{
+    font-size: 35px;
+    text-align: center;
+    color: #135D66;
+}
+
+header{
+    font-size: 20px;
+    text-align: center;
+    
+}
+
+form{
+    position: relative;
+    margin-top: 30px;
+}
+
+.form .campo{
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 6px;
+}
+
+.campo input,
+.campo button{
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 6px;
+}
+
+.campo input{
+    outline: none;
+    padding: 0 15px;
+    border: 1px solid#adc7c0;
+    /*box-shadow: 0 2px 4px rgba(96, 94, 94, 0.615) ;*/
+}
+
+.campo input:focus{
+    border-bottom-width: 2px;
+}
+
+.eye-icon{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(120%);
+    font-size: 18px;
+    color: #003C43;
+    cursor: pointer;
+    padding: 5px;
+
+}
+
+.campo button{
+    color: #fff;
+    background-color: #135D66;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.campo button:hover{
+    color: black;
+    background-color: #94cebf;
+}
+
+.form-link{
+    margin-top: 40px;
+    text-align: center;
+}
+
+.form-link span,
+.form-link a{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.form a{
+    color: #32524f;
+    text-decoration: none;
+}
+
+.form a:hover{
+    text-decoration: underline;
+}
+
+.line{
+    position: relative;
+    height: 1px;
+    width: 100%;
+    margin: 36px 0;
+    background-color: #85b3a7;
+}
+
+.line::before{
+    content: 'Ó';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: aliceblue;
+    color: rgb(40, 39, 39);
+    padding: 0 15px;
+}
+
+.media-options a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a.facebook{
+    color: #fff;
+    background-color: #4267b2;
+}
+
+a.facebook .facebook-icon{
+    height: 28px;
+    width: 28px;
+    color: #4267b2;
+    font-size: 20px;
+    border-radius:  50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.facebook-icon{
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+}
+
+a.google{
+    color: #fff;
+    background-color: #54565b;
+}
+
+a.google .google-icon{
+    height: 28px;
+    width: 28px;
+    color: #54565b;
+    font-size: 20px;
+    border-radius:  50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.google-icon{
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+}
+
+@media screen and (max-width: 400px) {
+    .titulo{
+    background-color: #003C43;
+    color: #E3FEF7;
+    margin-top: 20px;
+    font-size: 50px;
+    text-align: center;
+    }
+    .form{
+        padding: 15px 20px;
+        background-color: #E3FEF7;
+    }
+
+    .campo input{
+        outline: none;
+        padding: 0 15px;
+        border: 1px solid#b9d4cd;
+        /*box-shadow: 0 2px 4px rgba(96, 94, 94, 0.615) ;*/
+    }
+    
+    input{
+        background-color: #a6beb7;
+    }
+
+    .campo input:focus{
+        border-bottom-width: 2px;
+    }
+
+    .line{
+        position: relative;
+        height: 1px;
+        width: 100%;
+        margin: 36px 0;
+        background-color: #85b3a7;
+    }
+    
+    .line::before{
+        content: 'O';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #E3FEF7;
+        color: rgb(40, 39, 39);
+        padding: 0 15px;
+    }
+
+
+}
