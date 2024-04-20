@@ -1,57 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF -8">
-        <title>Heatmaps</title>
-        <link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heatmaps</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
     <body>
-    <div class="head">
+        <h1></h1>
+        <header>
+            <div class="menu container">
+                <a class="logo">
+                    <h1>H E A T M A  P S</h1>
+                </a>
+                <nav >
+                    <a href="../index/index.html" id="loadInicio">Inicio</a></li>
+                    <a href="../mapa/mapa.html" id="loadProyectos">Productos</a></li>
+                    <a href="../login/Login.html" id="loadLogin">Iniciar Sesión</a></li>
+                    <a href="../mapa/mapa.html" id="loadMap">Mapa</a></li>
+                </nav>
+            </div>
+            
+
+            <div class="header-content container">
+                <div class="header-txt">
+                    <h1>¡Hola! <br> <span>Conócenos</span></h1>
+                    <p>Heatmaps es una solución para empresas de logística que 
+                        busca asegurar un entorno más seguro para los camioneros y 
+                        contribuir a la seguridad vial en general, por medio de un sistema 
+                        que utiliza servicios en la nube como MongoDB, Google Cloud services y 
+                        GeoCatcher en conjunto de la Inteligencia artificial "Vertex AI"
+                    </p>
+                    <div class="buttons">
+                        <a href="" class="btn-1">Inicia Sesión</a>
+                        <a href="" class="btn-1">Config Proyectos</a>
+                    </div>
+                </div>
+                <div class="header-img">
+                    <img src="img/camion.png" alt="">    
+                </div>
+            </div>
+        </header>
+
+        <section class="menu-pl container">
+            <h2>Nuestras <span>caracteristicas</span> </h2>
+            <div class="general-content">
+                <div class="general-txt">
+                    <img src="img/inta.jpeg" alt="" class="imgc">
+                    <h3>Inteligencia Artificial</h3>
+                    <P>
+                        Uso de la IA para analizar las noticias más recientes, 
+                        y conocer la condición en la que se encuentra una cierta 
+                        ruta de transporte.
+                    </P>
+                </div>
+
+                <div class="general-txt">
+                    <img src="img/escaneow.jpeg" alt="" class="imgc">
+                    <h3>Escaneo web</h3>
+                    <P>
+                        Escaneo web para la recolección de datos 
+                        y uso de una base de datos MongoDB para su 
+                        almacenamiento y procesamiento.
+                    </P>
+                </div>
+
+                <div class="general-txt">
+                    <img src="img/mapa.jpeg" alt="" class="imgc">
+                    <h3>Mapas</h3>
+                    <P>
+                        Mapa de frecuencias de inciencia 
+                        delictiva sobre operadores camioneros
+                    </P>
+                </div>
+            </div>
+             
+        </section>
+
+        <section class="info container">
+
+            <div class="info-img">
+                <img src="img/pack.jpg" alt="">
+            </div>
+
+            <div class="info-txt">
+                <h2>Sobre <span>Nosotros</span></h2>
+                <p>
+                    Somos un equipo que trabaja en el desarrollo
+                    de la logistica, implementación de modelos basados en
+                    la nube, Inteligencia Artificial y estructuras de datos
+                </p>
+                <!--<a href="#" class="btn-1"></a>-->
+            </div>
+
+        </section>
         
-        <nav class="navbar">
-            <a href="../index/index.html" id="loadInicio">Inicio</a>
-            <a href="../mapa/mapa.html" id="loadProyectos">Productos</a>
-            <a href="../login/Login.html" id="loadLogin">Iniciar Sesión</a>
-            <a href="../mapa/mapa.html" id="loadMap">Mapa</a>
-        </nav>
-    </div>
+        <footer class="footer">
+            <div class="footer-content container">
+                <div class="link">
+                    <h3>Nuestro contacto</h3>
+                    <ul>
+                        <li><a href="">pinedappt@gmail.com</a></li>
+                        <li><a href="">isracard66@gmail.com</a></li>                        
+                        <li><a href="">cilantro.torr@gmail.com</a></li>                        
+                        <li><a href="">melyruizg04@gmail.com</a></li>
+                        <li><a href="">vichugoramo@gmail.com</a></li>                     
+                    </ul>
 
-    <header class="content header">
-        <h2 class="tile">Quienes Somos?</h2>
-        <a>
-            Bienvenido a Heatmaps, donde la seguridad y comodidad del usuario es nuestro principal objetivo. 
-        </a>
-
-        <div class="btn-home">
-            <a href="more.html" class="btn">Saber mas</a>
-        </div>
-    </header>
-   
-
-    <section class="content price">
-
-        <article class="contain">
-            <h2 class="title">Precio</h2>
-            <a>
-               Muy caro
-            </a>
-        </article>
-
-    </section>
-
-    <section class="content contact">
-        <h2 class="title"></h2>
-        <h2 class="title"></h2>
-        <h2 class="title">contacto</h2>
-        <p>Daniel Pipipineda Torres</p>
-        <p>Numero de Telefono: 442 102 1092</p>
-        <figure class="map">
-            <img src="img/mapa.png" height="420px" width="100%" alt="mapa">
-        </figure>
-
-
-    </section>
+                </div>
+            </div>
+        </footer>
+    
     </body>
 
 </html>
