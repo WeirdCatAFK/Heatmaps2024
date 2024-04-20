@@ -59,18 +59,19 @@ def main():
     print("Total news URLs retrieved:", len(urls))
     """
 
-
     import sqlite3
 
     def create_analysis(prompt: str):
         try:
-            conn = sqlite3.connect('data.db.db')
+            conn = sqlite3.connect("data.db")
             cursor = conn.cursor()
 
             cursor.execute("SELECT COUNT(*) FROM content")
             num_entries = cursor.fetchone()[0]
 
-            for i in range(1, num_entries + 1):  # Start from 1 and use <= to include num_entries
+            for i in range(
+                1, num_entries + 1
+            ):  # Start from 1 and use <= to include num_entries
                 cursor.execute("SELECT text, analisis FROM content WHERE id=?", (i,))
                 entry = cursor.fetchone()
 
@@ -78,8 +79,11 @@ def main():
                     text, analysis = entry
                     if text and not analysis:
                         # Use parameterized query to avoid SQL injection
-                        analysis_result = vertex.interview(prompt + text)
-                        cursor.execute("UPDATE content SET analisis=? WHERE id=?", (analysis_result, i))
+                        analysis_result = vertex.interview(prompt + text + f'id ={i}')
+                        cursor.execute(
+                            "UPDATE content SET analisis=? WHERE id=?",
+                            (analysis_result, i),
+                        )
                         print(analysis_result)
 
             conn.commit()
@@ -94,10 +98,9 @@ def main():
             except NameError:  # Handle case where conn is not defined
                 pass
 
-    prompt = ("El siguiente contenido es de una pagina web necesito que llenes los datos del siguiente json para analizarlo, solo regresa el JSON\r\nCondicion = Esta noticia presenta algun riesgo para un transportista?\r\n    {\r\n      \"ID\": 2,\r\n      \"LUGARES\": [\"Lugar4\", \"Lugar5\"...],\r\n      \"CONDICION\": false,\r\n      \"FECHA\": \"YYYY-MM-DD\",\r\n      \"CIUDADES\": [\"Ciudad1\", \"Ciudad2\"...]\r\n    }\r\n\r\n")
+    prompt = 'El siguiente contenido es de una pagina web necesito que llenes los datos del siguiente json para analizarlo, solo regresa el JSON\r\nCondicion = Esta noticia presenta algun riesgo para un transportista?, o algun riesgo en general para las personas que recorran estos lugares\r\n    {\r\n      "ID":\'\'\'\'\'\r\n      "LUGARES": ["Lugar4", "Lugar5"...],\r\n      "CONDICION": false,\r\n      "FECHA": "YYYY-MM-DD",\r\n      "CIUDADES": ["Ciudad1", "Ciudad2"...]\r\n    }\r\n\r\n'
     create_analysis(prompt)
 
-    
 
 if __name__ == "__main__":
     main()
