@@ -9,7 +9,6 @@ def GetKey():
         if "Google_Vertex" not in keys or not keys["Google_Vertex"]:
             print('Missing Google cloud project id')
     ProjectID = keys["Google_Vertex"]
-    print(ProjectID)
     return ProjectID
 
 #Call Vertex AI
@@ -28,3 +27,5 @@ def interview(prompt:str): #Prompt must be specific and clear
         **parameters
     )   
     return response.text #Returns a String
+
+print(interview('Dime 2 cosas sobre mapaches'))
