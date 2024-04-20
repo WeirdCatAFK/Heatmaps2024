@@ -3,7 +3,6 @@ const mongo = require('../config/mongo');
 const news = express.Router();
 
 news.get('/', (req, res, next) => {
-const result = "Pinged your deployment. You successfully connected to MongoDB!"
   try {
     const client = mongo.getClient();
 
@@ -21,7 +20,7 @@ const result = "Pinged your deployment. You successfully connected to MongoDB!"
 
 news.post('/', async (req, res, next) => {
   const { id_news, url, contenido, analisis } = req.body;
-  
+  const status = "pendiente"
   if (id_news && url && contenido && analisis) {
     try {
       const client = mongo.getClient();
@@ -29,7 +28,7 @@ news.post('/', async (req, res, next) => {
       const database = client.db("Prod");
       const coll = database.collection("News");
   
-      const doc = { id_news, url, contenido, analisis }
+      const doc = { id_news, url, contenido, analisis, status }
   
       const result = await coll.insertOne(doc);
   
