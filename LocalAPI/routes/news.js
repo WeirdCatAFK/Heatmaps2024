@@ -58,7 +58,7 @@ news.get('/', async (req, res, next) => {
 
     return res.status(200).json({ code: 200, message: result});
   } catch (err) {
-    return res.status(400).json({ code: 400, message: err.errorResponse});
+    return res.status(400).json({ code: 400, message: err.message});
   }
 });
 
@@ -81,7 +81,7 @@ news.post('/', async (req, res, next) => {
   
       return res.status(200).json({ code: 200, message: "Registro insertado con ID: " + result.insertedId});
     } catch (err) {
-      return res.status(400).json({ code: 400, message: err.errorResponse});
+      return res.status(400).json({ code: 400, message: err.message});
     }
   } else {
     return res.status(500).json({ code: 500, message: "Campos incompletos"});
@@ -113,7 +113,7 @@ news.put('/', async (req, res, next) => {
   
       return res.status(200).json({ code: 200, message: result.matchedCount + " documento afectados"});
     } catch (err) {
-      return res.status(400).json({ code: 400, message: err.errorResponse});
+      return res.status(400).json({ code: 400, message: err.message});
     }
   } else {
     return res.status(500).json({ code: 500, message: "Campos incompletos"});
