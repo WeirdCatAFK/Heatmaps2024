@@ -1,0 +1,159 @@
+/*Google Fonts - Poppins*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+.logo h1{
+    display: flex;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    align-items: center;
+}
+
+header{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0 45px 0 100px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+}
+
+nav a{
+    color: #022b30;
+    border-radius: 50px;
+    text-decoration: none;
+    padding: 6px 15px;
+    list-style: none;
+    margin-left: 20px;
+    font-size: 20px;
+    background-color: #77B0AA;
+}
+
+nav a:hover,
+nav a.activate{
+    background: #7fd9e5;
+    color: #094c55;
+}
+
+body{
+    background-color: #003C43;
+}
+
+
+.body-contenedores{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    background-color: #003C43;
+}
+
+.contenedor-form{
+    display: flex;
+    border-radius: 20px;
+    height: 500px;
+    max-width: 900px;
+    transition: all 1s ease;
+    margin: 10px;
+    border: solid thin #2e595e;
+}
+
+.informacion{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #cbebe2;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.info-childs{
+    width: 100%;
+    padding: 0 30px;
+    color: #022b30;
+}
+
+.form-informacion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    text-align: center;
+    background-color: aliceblue;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.form-informacion-child{
+    padding: 0 30px;
+}
+
+.formulario{
+    width: 100%;
+    padding: 0 10px;
+    color: #022b30;
+}
+
+.h1t{
+    margin-bottom: 20px;
+}
+
+.formulario label{
+    font-size: 20px;
+}
+
+.line{
+    align-items: center;
+    height: 2px;
+    width: 100%;
+    background-color: #85b3a7;
+}
+
+.form-content{
+    margin-bottom: 50px;
+}
+
+.form-content input, 
+.form-content button{
+    height: 40px;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 6px;
+}
+
+.form-content input{
+    outline: none;
+    padding: 0 15px;
+    border: 1px solid#adc7c0;
+    text-align: center;
+}
+
+.form-content input:focus{
+    border-bottom-width: 2px;
+}
+
+.form-content button{
+    color: #fff;
+    background-color: #135D66;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.form-content button:hover{
+    color: #000000;
+    font-weight: bold;
+    background-color: #2c8072;
+}
+

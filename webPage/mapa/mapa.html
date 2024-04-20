@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mapa</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+        <link rel="stylesheet" href="estilosm.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .contenedor {
+                display: flex;
+            }
+
+            #map {
+                width: 60vw;
+                height: 80vh;
+                border-radius: 10px;
+            }
+
+            .boton {
+                margin-bottom: 10px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <a class="logo">
+                <h1>H E A T M A  P S</h1>
+            </a>
+            <nav>
+                <a href="../index/index.html" id="loadInicio">Inicio</a>
+            <a href="../index/Products.html" id="loadProyectos">Productos</a>
+            <a href="../login/Login.html" id="loadLogin">Iniciar Sesión</a>
+            <a href="../mapa/mapa.html" id="loadMap">Mapa</a>
+            </nav>
+        </header>
+        <div class="contenedor">
+            <div class="barra-lateral">
+                <div class="nombre-pagina">
+                    <i class='bx bx-menu' id="barras-icon"></i>
+                    <span>Panel de Control</span>
+                </div>
+                <button class="boton">
+                    <ion-icon name="podium"></ion-icon>
+                    <span>Analizar coordenadas</span>
+                </button>
+                <br>
+                <button class="boton">
+                    <ion-icon name="create" class="create"></ion-icon>
+                    <span class="CR">Crear Registro</span>
+                </button> 
+            </div>
+            <div class="contenido-central">
+                <div class="titulo-mapa">Mapa</div>
+                <div id="map"></div>
+            </div>
+        </div>
+
+        <script src="mapa.js"></script>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+        
+        <script>
+            //Map initialization =======================================
+            var map = L.map('map').setView([19.42847, -99.12766], 13);
+            
+            //OSM Layer
+            var osm =
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            });
+            osm.addTo(map);
+            function addMarker(Alt,Lat,Popup){
+        L.marker([Alt,Lat]).addTo(map).bindPopup(Popup).openPopup();
+    }
+    // Function to make a GET request to the Flask server
+    function fetchData() {
+        fetch('http://127.0.0.1:5000/')
+        .then(response => response.json())
+        .then(data => {
+        // Handle the received JSON data
+            console.log(data); // You can process the data here
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    //fetchData();
+
+
+       //CONTROLES HTML===============================
+       LI = document.getElementById("loadInicio");
+        LI.addEventListener("click",function () {
+            window.location.href = LI.href;
+        });
+        LL = document.getElementById("loadLogin");
+        LL.addEventListener("click",function () {
+            window.location.href = LL.href;
+        });
+        LMap = document.getElementById("loadMapa");
+        LMap.addEventListener("click",function () {
+            window.location.href = LMap.href;
+        });
+        LP = document.getElementById("loadProyectos");
+        LP.addEventListener("click",function () {
+            window.location.href = LP.href;
+        });
+        </script>
+        
+    </body>
+
+</html>
+
+<!-- leafet js-->
+
