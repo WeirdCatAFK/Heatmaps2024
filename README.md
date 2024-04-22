@@ -38,5 +38,7 @@ Para implementar el uso de la inteligencia artificial "Vertex AI", el programa u
 ## Renderizado de localizaciones GeoCode
 El sistema se conecta a un cliente **GeoCode** para obtener la ubicación que la IA provee, Y devuelve la latitud y longitud del resultado, la cual grafica en el mapa una distribución de densidad de acuerdo con la freuencia de inciencia en una cierta zona.
 
+![FireShot Capture 002 - Heatmaps - ](https://github.com/WeirdCatAFK/Heatmaps2024/assets/131494424/b0d5eeee-f1f5-4806-8a50-dd84e42fabaa)
 
+![image](https://github.com/WeirdCatAFK/Heatmaps2024/assets/131494424/3bbcacc1-9996-44df-a9a7-888b73f5da37)
 
