@@ -15,7 +15,7 @@
  - ## Antonio Israel Cárdenas Suárez
 	 - Visuals Designer
 	 - Backend developer
- - ## Viktor Hugo Ramirez Moreno
+ - ## Victor Hugo Ramirez Moreno
 	 - Design assistant
 
 # Vista general
@@ -29,8 +29,8 @@ Heatmaps es una solución para empresas de logística que busca asegurar un ento
 # Especificaciones
 ## API con node.js
 La API del proyecto está desarrollada a la medida de acuerdo con las necesidades del proyecto. Basado en el framework **react**, esta api permite la comunicación eficiente entre todos los distintos módulos y arquitecturas que el sistema requiere.
-## Base de datos no relacional basada en la nube "MongoDB"
-El sistema se conecta directamente con una **base de datos no relacional basada en la nube _MongoDB_**, con el objetivo de tener acceso seguro y eficiente a la información a analizar. El cliente de inteligencia artificial se conecta con la base de datos y obtiene las noticias almacenadas en la misma para la obtención de resultados.
+## Base de datos no relacional basada en la nube "MongoDB Atlas"
+El sistema se conecta directamente con una **base de datos no relacional basada en la nube _MongoDB Atlas_**, con el objetivo de tener acceso seguro y eficiente a la información a analizar. El cliente de inteligencia artificial se conecta con la base de datos y obtiene las noticias almacenadas en la misma para la obtención de resultados.
 
 ## Inteligencia artificial generativa "VertexAI"
 Para implementar el uso de la inteligencia artificial "Vertex AI", el programa utiliza VertexAI API. El sistema inicializa el modelo de procesamiento de texto utilizando una **ID única** de conexión con el servidor, y utiliza un parámetro prompt de tipo String. La IA analiza y retorna la información más relevante en un formato fácil de procesar.
